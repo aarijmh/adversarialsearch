@@ -29,7 +29,7 @@ class Minimax(object):
         return value
     
     def minimax_decision(self,state, callfunc, comparator = lambda a,b: a< b, resultValue = -1000000000000):
-        
+        self._duplicateStates = {}
         self._duplicateStates[str(state)] = state
         resultAction = None
         returnState = None
