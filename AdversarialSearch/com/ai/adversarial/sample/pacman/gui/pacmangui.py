@@ -156,8 +156,8 @@ class GuiHandler(object):
         self.root = Tk()
         self.game = PacmanGame(file)
         sys.setrecursionlimit(10000) 
-        self.minimax = Minimax(self.game)
-#         self.minimax = MinimaxDepthLimited(self.game,10)
+#         self.minimax = Minimax(self.game)
+        self.minimax = MinimaxDepthLimited(self.game,10)
         self.initializeGui()
         
 
