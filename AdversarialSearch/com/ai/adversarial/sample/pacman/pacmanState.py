@@ -24,7 +24,18 @@ class PacmanState(object):
         for ghsts in self._ghosts:
             gh.append(ghsts.createCopy())
         
-        return PacmanState(self._player.createCopy(),gh,copy.deepcopy(self._dots),copy.deepcopy(self._power),self._move,self._utility)    
+        dots = {}
+        for k,v in self._dots.items():
+            dots[k] = v
+            
+        power = {}
+        for k,v in self._power.items():
+            power[k] = v
+        
+        return PacmanState(self._player.createCopy(),gh,dots,power,self._move,self._utility)
+    
+    def getTotalAgents(self):
+        return len(self._ghosts) + 1    
     
     def __str__(self):
         st = ""

@@ -3,14 +3,18 @@ Created on Mar 21, 2019
 
 @author: dr.aarij
 '''
-from tkinter import Frame, Canvas, Tk, Label, Button
-from com.ai.adversarial.sample.pacman.constants import WALL, FOOD, POWER, PLAYER,\
-    GHOSTS, EMPTY
-from com.ai.adversarial.sample.pacman.pacmanGame import PacmanGame
-from com.ai.adversarial.sample.pacman import constants
-from com.ai.adversarial.search.minimax import Minimax
 import threading
 import time
+from tkinter import Frame, Canvas, Tk, Label, Button
+
+from com.ai.adversarial.sample.pacman import constants
+from com.ai.adversarial.sample.pacman.constants import WALL, FOOD, POWER, PLAYER, \
+    GHOSTS, EMPTY
+from com.ai.adversarial.sample.pacman.pacmanGame import PacmanGame
+from com.ai.adversarial.search.minimax import Minimax
+from com.ai.adversarial.search.minimaxdepthlimited import MinimaxDepthLimited
+import sys
+
 
 class PacmanGUI(Frame):
     def __init__(self, parent, maze,screenHeight=600, screenWidth=800):
@@ -151,7 +155,9 @@ class GuiHandler(object):
     def __init__(self,file):
         self.root = Tk()
         self.game = PacmanGame(file)
+        sys.setrecursionlimit(10000) 
         self.minimax = Minimax(self.game)
+#         self.minimax = MinimaxDepthLimited(self.game,10)
         self.initializeGui()
         
 
@@ -183,19 +189,20 @@ class GuiHandler(object):
             retValue = 0
             if self.state._move == 0:
                 fun = self.minimax.minvalue
-                lmb = lambda a,b: a > b
+                lmb = lambda a,b: a >= b
                 retValue = -1000000000000
             else:
                 fun = self.minimax.maxvalue
-                lmb = lambda a,b: a < b
+                lmb = lambda a,b: a <= b
                 retValue = 1000000000000
             _, valu, st = self.minimax.minimax_decision(self.state,  fun, lmb,retValue)
             self.state = st
+            self.state._utility = 0
             self.board.drawState(self.state)
             self.lb['text'] = str(valu)
             time.sleep(.1)
     
 
 if __name__ == "__main__":
-    GuiHandler("..\\..\\..\\..\\..\\..\\layout\\custom.lay")
+    GuiHandler("..\\..\\..\\..\\..\\..\\layout\\custom2.lay")
         
