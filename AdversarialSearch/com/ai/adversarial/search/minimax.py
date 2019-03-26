@@ -55,7 +55,7 @@ class Minimax(object):
             return state._utility
         retValue = 1000000000000
         fun = None
-        if state._move < len(state._ghosts):
+        if state._move < self._game.getAgentCount() -1:
             fun = self.minvalue
         else:
             fun = self.maxvalue
@@ -75,7 +75,7 @@ class Minimax(object):
         retValue = -1000000000000
         
         for action in self._game.getActions(state):
-            if len(state._ghosts) > 0:
+            if self._game.getAgentCount() > 1:
                 retValue = max(retValue, self.minvalue(self._game.getResult(state,action), player))
             else:
                 retValue = max(retValue, self.maxvalue(self._game.getResult(state,action), player))

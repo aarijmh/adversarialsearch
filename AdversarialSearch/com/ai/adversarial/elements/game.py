@@ -30,4 +30,6 @@ class Game(object):
     
     @abstractmethod
     def utility(self,state,player): pass
-        
+    
+    @abstractmethod
+    def getAgentCount(self): pass

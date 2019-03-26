@@ -103,6 +103,9 @@ class PacmanGame(Game):
     def utility(self,state,player): 
         return state._utility
     
+    def getAgentCount(self):
+        return len(self._enemies) + 1
+    
     def buildMazeFromFile(self):
         self._maze = []
         file_object  = open(self._mazeFile, 'r')
