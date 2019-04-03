@@ -112,18 +112,15 @@ class GuiHandler(object):
             _, _, st = self.minimax.minimax_decision(self.state,  self.minimax.minvalue, lambda a,b: a >= b,-1000000000000)
             self.state = st            
             if self.state == None:
-                self.lb['text'] = 'Game drawn'                
+                self.lb['text'] = 'Game drawn'
+                return                 
             elif self.state._move == -1:
                 if self.state._utility == -1:
                     self.lb['text'] = 'Player Won'
                 elif  self.state._utility == 1:
                     self.lb['text'] = 'Computer Won'
-                else:
-                    self.lb['text'] = 'Game drawn'
-                self.started = False
-            else:
-                self.board.drawState(self.state)
-                self.state._utility = 0
+            self.board.drawState(self.state)
+            self.state._utility = 0
         
     def nextHandler(self,_):
         if self.rb.get() != 0:

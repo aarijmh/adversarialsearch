@@ -56,6 +56,8 @@ class PacmanGame(Game):
                 reverseAction = (player._direction[0]*-1,player._direction[1]*-1)
                 if reverseAction in actions and len(actions) > 1:
                     actions.remove(reverseAction)
+                actions.remove(player._direction)
+                actions.append(player._direction)
             else:player._direction = actions[0]
                         
         return actions
