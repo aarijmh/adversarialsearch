@@ -3,9 +3,9 @@ Created on Mar 16, 2019
 
 @author: dr.aarij
 '''
-import copy
+from com.ai.adversarial.elements.state import State
 
-class PacmanState(object):
+class PacmanState(State):
     '''
     classdocs
     '''
@@ -18,6 +18,7 @@ class PacmanState(object):
         self._power = power
         self._move = move
         self._utility = utility
+        self._action = None
     
     def createCopy(self):
         gh = []
@@ -35,7 +36,16 @@ class PacmanState(object):
         return PacmanState(self._player.createCopy(),gh,dots,power,self._move,self._utility)
     
     def getTotalAgents(self):
-        return len(self._ghosts) + 1    
+        return len(self._ghosts) + 1 
+    
+    def isMax(self):   
+        return self._move == 0
+    
+    def isNextAgentMax(self):
+        return (self._move + 1) % (len(self._ghosts) + 1) == 0
+    
+    def getAction(self):
+        return self._action
     
     def __str__(self):
         st = ""

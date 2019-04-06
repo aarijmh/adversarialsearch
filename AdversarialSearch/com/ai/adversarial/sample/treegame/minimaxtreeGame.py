@@ -7,6 +7,7 @@ from com.ai.adversarial.elements.game import Game
 from com.ai.adversarial.sample.treegame.adversarialNode import AdversarialNode
 import sys
 from com.ai.adversarial.search.minimax import Minimax
+from com.ai.adversarial.search.simpleMinimax import SimpleMinimax
 
 
 class MinimaxTreeGame(Game):
@@ -66,10 +67,21 @@ class MinimaxTreeGame(Game):
     def getAgentCount(self): 
         return 2
     
+    def printState(self,state):
+        toPrintNodes = []
+        toPrintNodes.append(state)
+        while len(toPrintNodes) > 0:
+            node = toPrintNodes[0]
+            del toPrintNodes[0]
+            print("Name = %s, value = %d"%(node._name,node._utility))
+            toPrintNodes += node._children
+        
+    
     
 if __name__ == "__main__":
     game = MinimaxTreeGame()    
-    minimax = Minimax(game)
-    action,value,state=minimax.minimax_decision(game.getInitialState(),  minimax.minvalue, lambda a,b: a > b) 
-    print(state)
+    minimax = SimpleMinimax(game)
+    initialState = game.getInitialState()
+    minimax.minimax_decision(initialState) 
+    game.printState(initialState)
     

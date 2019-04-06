@@ -42,6 +42,7 @@ class Minimax(object):
                 resultValue = value
                 resultAction = action
                 returnState = resultingState
+                state._utility = value
         return resultAction,resultValue,returnState
     
     def minvalue(self,state,player):
@@ -60,7 +61,8 @@ class Minimax(object):
         else:
             fun = self.maxvalue
         for action in self._game.getActions(state):
-            retValue = min(retValue, fun(self._game.getResult(state,action), player))        
+            retValue = min(retValue, fun(self._game.getResult(state,action), player)) 
+            state._utility = retValue       
         return retValue
             
     def maxvalue(self,state,player):
@@ -79,6 +81,8 @@ class Minimax(object):
                 retValue = max(retValue, self.minvalue(self._game.getResult(state,action), player))
             else:
                 retValue = max(retValue, self.maxvalue(self._game.getResult(state,action), player))
+            
+            state._utility = retValue 
         
         return retValue
     
